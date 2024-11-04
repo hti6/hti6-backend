@@ -2,7 +2,7 @@
 
 use App\Helpers\Constants;
 use Illuminate\Database\Migrations\Migration;
-use Clickbar\Magellan\Schema\MagellanBlueprint as Blueprint;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
