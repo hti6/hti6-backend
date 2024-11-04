@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\UserMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -10,7 +12,7 @@ use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use App\Http\Middleware\Headers;
+use App\Http\Middleware\Header;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -19,7 +21,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->api([
-            Headers::class
+            Header::class
+        ]);
+        $middleware->alias([
+            'type.client' =>    UserMiddleware::class,
+            'type.admin' =>     AdminMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
@@ -44,13 +50,11 @@ return Application::configure(basePath: dirname(__DIR__))
                 'message' => __('Maximum attempts, please try again later')
             ], 429);
         });
-
         $exceptions->render(function (AuthorizationException $e, Request $request) {
             return response()->json([
                 'message' => __('Forbidden')
             ], 403);
         });
-
         $exceptions->render(function (AuthenticationException $e, Request $request) {
             return response()->json([
                 'message' => __('Unauthorized')

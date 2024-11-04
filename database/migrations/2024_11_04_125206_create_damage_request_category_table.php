@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->ulid('id')->primary();
-            $table->string('name');
-            $table->string('login')->unique();
-            $table->string('password');
+        Schema::create('damage_request_category', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
+            $table->foreignUlid('damage_request_id')->constrained('damage_requests')->cascadeOnDelete();
+            $table->foreignUlid('category_id')->constrained('categories')->cascadeOnDelete();
         });
     }
 
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('damage_request_category');
     }
 };

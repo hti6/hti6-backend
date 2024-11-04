@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 function getUser(): User
 {
     $user = Auth::guard('sanctum')->user();
-    if (get_class($user) == User::class) {
+    if ($user) {
         return $user;
     } else {
         throw new AuthenticationException();
@@ -30,4 +30,13 @@ function qck_response(mixed $data = true, string $message = 'Success'): array
         'result' => $data,
         'message' => __($message),
     ];
+}
+
+/**
+ * @param string $message
+ * @return string
+ */
+function qck_error(string $message): string
+{
+    return __($message);
 }
