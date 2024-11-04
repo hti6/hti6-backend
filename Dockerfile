@@ -1,6 +1,6 @@
-FROM php:8.3
+FROM php:8.3-alpine
 
-RUN apt-get update && apt-get install -y \
+RUN apk update && apk add \
     bash \
     git \
     nano \
@@ -9,8 +9,7 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     postgresql-client \
     zip \
-    wget \
-    && rm -rf /var/lib/apt/lists/*
+    wget
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
