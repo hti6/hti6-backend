@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Clickbar\Magellan\Database\Eloquent\HasPostgisColumns;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class DamageRequest extends Model
 {
     use HasUlids;
+    use HasPostgisColumns;
 
     protected $table = 'damage_requests';
 
@@ -19,7 +21,7 @@ class DamageRequest extends Model
     ];
 
     protected array $postgisColumns = [
-        'location' => [
+        'point' => [
             'type' => 'geometry',
             'srid' => 4326,
         ],

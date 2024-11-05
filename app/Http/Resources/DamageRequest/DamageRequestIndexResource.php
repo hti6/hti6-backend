@@ -17,7 +17,8 @@ class DamageRequestIndexResource extends JsonResource
         return [
             'id' => $this->id,
             'priotity' => $this->priority,
-            'coordinates' => $this->point->x . ',' . $this->point->y,
+            'latitude' => $this->point->x,
+            'longitude' => $this->point->y,
             'created_at' => $this->created_at
         ];
     }

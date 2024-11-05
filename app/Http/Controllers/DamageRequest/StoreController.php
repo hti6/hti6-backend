@@ -25,6 +25,7 @@ class StoreController extends Controller
 
         DamageRequest::create([
             'point' => Point::make($dto['latitude'], $dto['longitude']),
+            'photo_url' => $dto['photo_url'],
             'user_id' => $user->id,
         ]);
 
