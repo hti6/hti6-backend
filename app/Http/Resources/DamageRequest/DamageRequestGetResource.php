@@ -3,6 +3,7 @@
 namespace App\Http\Resources\DamageRequest;
 
 use App\Http\Resources\Camera\CameraGetResource;
+use App\Http\Resources\Category\CategoryIndexResource;
 use App\Http\Resources\User\UserGetResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -24,6 +25,7 @@ class DamageRequestGetResource extends JsonResource
             'created_at' => $this->created_at,
             'user' => new UserGetResource($this->user),
             'camera' => new CameraGetResource($this->camera),
+            'categories' => CategoryIndexResource::collection($this->categories),
             'type' => $this->getType()
         ];
     }
