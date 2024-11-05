@@ -24,11 +24,12 @@ function getUser(): User
  * @param string $message
  * @return array
  */
-function qck_response(mixed $data = true, string $message = 'Success'): array
+function qck_response(mixed $data = true, string $message = 'Success', ?array $meta = null): array
 {
     return [
         'result' => $data,
         'message' => __($message),
+        'meta' => $meta
     ];
 }
 

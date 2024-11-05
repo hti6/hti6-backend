@@ -40,6 +40,12 @@ class IndexController extends Controller
 
         $damageRequests = $damageRequests->paginate($dto['first'] ?? 100, page: $dto['page'] ?? 1);
 
-        return $this->present(qck_response(DamageRequestIndexResource::collection($damageRequests)));
+        $meta = [
+            'total' => $damageRequests->total(),
+            'current_page' => $damageRequests->currentPage(),
+            'per_page' => $damageRequests->perPage(),
+        ];
+
+        return $this->present(qck_response(DamageRequestIndexResource::collection($damageRequests), meta: $meta));
     }
 }

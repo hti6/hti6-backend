@@ -31,6 +31,12 @@ class IndexController extends Controller
 
         $cameras = $cameras->paginate($dto['first'] ?? 100, page: $dto['page'] ?? 1);
 
-        return $this->present(qck_response(CameraIndexResource::collection($cameras)));
+        $meta = [
+            'total' => $cameras->total(),
+            'current_page' => $cameras->currentPage(),
+            'per_page' => $cameras->perPage(),
+        ];
+
+        return $this->present(qck_response(CameraIndexResource::collection($cameras), meta: $meta));
     }
 }
