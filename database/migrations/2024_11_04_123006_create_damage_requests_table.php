@@ -17,6 +17,7 @@ return new class extends Migration
             $table->magellanPoint('point');
             $table->enum('priority', Constants::PRIORITIES)->default(Constants::DEFAULT_PROPERTY);
             $table->foreignUlid('user_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignUlid('camera_id')->nullable()->constrained('cameras')->nullOnDelete();
             $table->string('photo_url')->nullable();
             $table->timestamps();
         });

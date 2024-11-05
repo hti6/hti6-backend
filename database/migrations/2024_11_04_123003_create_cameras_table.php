@@ -15,8 +15,11 @@ return new class extends Migration
             $table->ulid('id')->primary();
             $table->timestamps();
             $table->magellanPoint('point');
-            $table->string('resolution');
             $table->string('name');
+            $table->string('url');
+            $table->string('port')->nullable();
+            $table->string('username')->nullable();
+            $table->string('password')->nullable();
         });
     }
 

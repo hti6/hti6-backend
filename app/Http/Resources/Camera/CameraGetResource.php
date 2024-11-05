@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Resources\DamageRequest;
+namespace App\Http\Resources\Camera;
 
+use App\Http\Resources\CameraHistory\CameraHistoryIndexResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DamageRequestIndexResource extends JsonResource
+class CameraGetResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +17,12 @@ class DamageRequestIndexResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'priotity' => $this->priority,
+            'name' => $this->name,
+            'url' => $this->url,
             'latitude' => $this->point->getX(),
             'longitude' => $this->point->getY(),
             'created_at' => $this->created_at,
-            'type' => $this->getType()
+            'history' => CameraHistoryIndexResource::collection($this->histories)
         ];
     }
 }
