@@ -17,13 +17,12 @@ class ImageConsumer extends Command
     public function handle()
     {
         $consumer = Kafka::consumer(['images'])
-//            ->withBrokers(config('kafka.brokers'))
-            ->withBrokers('172.26.0.15:9092')
+            ->withBrokers(config('kafka.brokers'))
             ->withAutoCommit()
             ->withHandler(function (ConsumerMessage $message, MessageConsumer $consumer) {
                 $aiService = new AIService();
                 $message = $message->getBody();
-                $aiService->request($message['file_url'], $message['damage_request_id']);
+                $aiService->request($message['photo_url'], $message['damage_request_id']);
             })
             ->build();
 
