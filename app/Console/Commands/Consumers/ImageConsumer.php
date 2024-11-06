@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Consumers;
+namespace App\Console\Commands\Consumers;
 
 use App\Services\AIService;
 use Illuminate\Console\Command;
