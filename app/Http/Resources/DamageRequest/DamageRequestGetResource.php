@@ -23,6 +23,7 @@ class DamageRequestGetResource extends JsonResource
             'latitude' => $this->point->getX(),
             'longitude' => $this->point->getY(),
             'created_at' => $this->created_at,
+            'photo_url' => $this->photo_url,
             'user' => new UserGetResource($this->user),
             'camera' => new CameraGetResource($this->camera),
             'categories' => CategoryIndexResource::collection($this->categories),

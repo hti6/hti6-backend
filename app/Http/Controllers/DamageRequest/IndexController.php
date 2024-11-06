@@ -4,6 +4,7 @@ namespace App\Http\Controllers\DamageRequest;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DamageRequest\IndexRequest;
+use App\Http\Resources\DamageRequest\DamageRequestGetResource;
 use App\Http\Resources\DamageRequest\DamageRequestIndexResource;
 use App\Models\DamageRequest;
 use Illuminate\Auth\AuthenticationException;
@@ -46,6 +47,6 @@ class IndexController extends Controller
             'per_page' => $damageRequests->perPage(),
         ];
 
-        return $this->present(qck_response(DamageRequestIndexResource::collection($damageRequests), meta: $meta));
+        return $this->present(qck_response(DamageRequestGetResource::collection($damageRequests), meta: $meta));
     }
 }
