@@ -34,9 +34,10 @@ final class AIService
                 print("Finding damage_request");
                 $damageRequest = DamageRequest::findOrFail($damage_request_id);
                 print("Damage request finded");
+                $response = $response->json();
                 $damageRequest->update([
-                    'priority' => $response->type ?? 'middle',
-                    'photo_url' => $response->image_url ?? $damageRequest->photo_url,
+                    'priority' => $response[0]['type'] ?? 'middle',
+                    'photo_url' => $response[0]['image_url'] ? 'https://cdn.indock.ru/images/' . $response[0]['image_url'] : $damageRequest->photo_url,
                 ]);
                 print("Damage request updated id:" . $damageRequest->id);
             } else {
