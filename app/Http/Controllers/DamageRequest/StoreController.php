@@ -38,7 +38,7 @@ class StoreController extends Controller
                     'photo_url' => $damageRequest->photo_url
                 ]
             );
-            KafkaFacade::publish(config('kafka.brokers'))
+            KafkaFacade::publish('172.26.0.15:9092')
                 ->onTopic('images')
                 ->withMessage($message)
                 ->send();
