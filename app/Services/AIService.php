@@ -29,7 +29,7 @@ final class AIService
                 ]
             );
 
-        if ($response->successful()) {
+        if ($response->status() == 200) {
             if (isset($damage_request_id)) {
                 $damageRequest = DamageRequest::findOrFail($damage_request_id);
                 $damageRequest->update([
