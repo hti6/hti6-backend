@@ -18,6 +18,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions
 RUN install-php-extensions pdo_pgsql
 RUN install-php-extensions bcmath
 RUN install-php-extensions pcntl
+RUN install-php-extensions rdkafka
 
 RUN install-php-extensions @composer
 
