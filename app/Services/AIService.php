@@ -20,7 +20,7 @@ final class AIService
                 'Accept' => 'application/json',
             ]
         );
-
+        print("Sending request");
         $response = $request
             ->post(
                 config('ai.AI_URL'),
@@ -28,7 +28,7 @@ final class AIService
                     'files' => [$file_url],
                 ]
             );
-
+        print("Request sended status:" . $response->status());
         if ($response->status() == 200) {
             if (isset($damage_request_id)) {
                 $damageRequest = DamageRequest::findOrFail($damage_request_id);
