@@ -34,7 +34,7 @@ class StoreController extends Controller
 
             $message = new Message(
                 body: [
-                    'damage_request' => $damageRequest,
+                    'damage_request_id' => $damageRequest->id,
                     'photo_url' => $damageRequest->photo_url
                 ]
             );

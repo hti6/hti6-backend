@@ -13,7 +13,7 @@ final class AIService
     /**
      * @throws ConnectionException|AIServiceException
      */
-    public function request($file_url, ?DamageRequest $damageRequest = null, ?Camera $camera = null): void
+    public function request($file_url, ?string $damage_request_id = null, ?string $camera_id = null): void
     {
         $request = Http::withHeaders(
             [
@@ -30,17 +30,19 @@ final class AIService
             );
 
         if ($response->successful()) {
-            if (isset($damageRequest)) {
+            if (isset($damage_request_id)) {
+                $damageRequest = DamageRequest::findOrFail($damage_request_id);
                 $damageRequest->update([
                     'priority' => $response->type ?? 'middle',
                     'photo_url' => $response->image_url ?? $damageRequest->photo_url,
                 ]);
             } else {
+                $camera = Camera::findOrFail($camera_id);
                 DamageRequest::create([
-                    'point' => $camera?->point,
+                    'point' => $camera->point,
                     'priority' => $response->type ?? 'middle',
                     'photo_url' => $response->image_url ?? null,
-                    'camera_id' => $camera?->id
+                    'camera_id' => $camera->id
                 ]);
             }
         } else {

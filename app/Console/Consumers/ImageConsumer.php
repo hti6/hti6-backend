@@ -22,7 +22,7 @@ class ImageConsumer extends Command
             ->withHandler(function (ConsumerMessage $message, MessageConsumer $consumer) {
                 $aiService = new AIService();
                 $message = $message->getBody();
-                $aiService->request($message['file_url'], $message['damage_request']);
+                $aiService->request($message['file_url'], $message['damage_request_id']);
             })
             ->build();
 
