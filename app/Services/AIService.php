@@ -31,11 +31,14 @@ final class AIService
         print("Request sended status:" . $response->status());
         if ($response->status() == 200) {
             if (isset($damage_request_id)) {
+                print("Finding damage_request");
                 $damageRequest = DamageRequest::findOrFail($damage_request_id);
+                print("Damage request finded");
                 $damageRequest->update([
                     'priority' => $response->type ?? 'middle',
                     'photo_url' => $response->image_url ?? $damageRequest->photo_url,
                 ]);
+                print("Damage request updated id:" . $damageRequest->id);
             } else {
                 $camera = Camera::findOrFail($camera_id);
                 DamageRequest::create([
