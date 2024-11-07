@@ -9,6 +9,7 @@ use App\Http\Controllers\Camera\IndexController as CameraIndex;
 use App\Http\Controllers\Camera\StoreController as CameraStore;
 use App\Http\Controllers\Camera\GetController as CameraGet;
 use App\Http\Controllers\Category\IndexController as CategoryIndex;
+use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\User\IndexController as UserIndex;
 use App\Http\Controllers\User\StoreController as UserStore;
 use App\Http\Controllers\User\UpdateController as UserUpdate;
@@ -28,6 +29,7 @@ Route::prefix('/v1')->group(function () {
         Route::get('/notifications', NotificationsController::class);
         Route::put('/');
         Route::get('/categories',CategoryIndex::class);
+        Route::get('/statistics', StatisticsController::class);
         Route::prefix('/damage_requests')->group(function () {
             Route::post('/',    DamageRequestStore::class);
             Route::get('/',    DamageRequestIndex::class);

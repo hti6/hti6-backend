@@ -97,7 +97,7 @@ final class AIService
                 'priority' => $response[0]['type'] ?? 'middle',
                 'photo_url' => $response[0]['image_url'] ? 'https://cdn.indock.ru/images/' . $response[0]['image_url'] : null,
                 'camera_id' => $camera->id,
-                'point' => $camera->point   
+                'point' => $camera->point
             ]);
             if (isset($response[0]['predictions']) && is_array($response[0]['predictions'])) {
                 $damageClasses = collect($response[0]['predictions'])
