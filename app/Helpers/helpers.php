@@ -1,14 +1,15 @@
 <?php
 
+use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * @return User
+ * @return User|Admin
  * @throws AuthenticationException
  */
-function getUser(): User
+function getUser(): User|Admin
 {
     $user = Auth::guard('sanctum')->user();
     if ($user) {
