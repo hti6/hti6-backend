@@ -22,7 +22,7 @@ class CameraConsumer extends Command
             ->withHandler(function (ConsumerMessage $message, MessageConsumer $consumer) {
                 $aiService = new AIService();
                 $message = $message->getBody();
-                $aiService->request_to_camera($message['rtsp_url'], $message['camera_url']);
+                $aiService->request_to_camera($message['rtsp_url'], $message['camera_id']);
             })
             ->build();
 
