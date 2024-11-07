@@ -16,7 +16,7 @@ class UserMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user()->tokenCan('role:user')) {
+        if (auth()->user()->tokenCan('role:user') || auth()->user()->tokenCan('role:admin')) {
             return $next($request);
         }
         throw new AuthenticationException();
