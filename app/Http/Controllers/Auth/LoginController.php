@@ -22,7 +22,7 @@ final readonly class LoginController extends Controller
 
         if (Auth::guard('admin')
             ->attempt(['login' => $dto['login'], 'password' => $dto['password']])) {
-            $user = Auth::user();
+            $user = Auth::guard('admin')->user();
 
             $token = $user->createToken('auth-token', ['role:user','role:admin'])->plainTextToken;
         } else if (Auth::guard('web')
