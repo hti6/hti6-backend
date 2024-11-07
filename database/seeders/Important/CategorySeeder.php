@@ -13,14 +13,6 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::factory([
-            'name' => 'Яма',
-        ])->create();
-        Category::factory([
-            'name' => 'Выбоина',
-        ])->create();
-        Category::factory([
-            'name' => 'Лужа',
-        ])->create();
+
     }
 }

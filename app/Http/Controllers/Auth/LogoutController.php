@@ -7,7 +7,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class LogoutController extends Controller
+final readonly class LogoutController extends Controller
 {
     /**
      * @return JsonResponse

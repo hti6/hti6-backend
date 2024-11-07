@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Junges\Kafka\Facades\Kafka as KafkaFacade;
 use Junges\Kafka\Message\Message;
 
-class StoreController extends Controller
+final readonly class StoreController extends Controller
 {
     /**
      * @param StoreRequest $request

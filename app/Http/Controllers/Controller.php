@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-abstract class Controller
+readonly abstract class Controller
 {
     /**
      * @param mixed $data

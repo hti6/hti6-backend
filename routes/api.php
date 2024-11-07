@@ -9,6 +9,10 @@ use App\Http\Controllers\Camera\IndexController as CameraIndex;
 use App\Http\Controllers\Camera\StoreController as CameraStore;
 use App\Http\Controllers\Camera\GetController as CameraGet;
 use App\Http\Controllers\Category\IndexController as CategoryIndex;
+use App\Http\Controllers\User\IndexController as UserIndex;
+use App\Http\Controllers\User\StoreController as UserStore;
+use App\Http\Controllers\User\UpdateController as UserUpdate;
+use App\Http\Controllers\User\DeleteController as UserDelete;
 use App\Http\Controllers\Map\MapController;
 use App\Http\Controllers\User\NotificationsController;
 use App\Http\Controllers\User\SelfController;
@@ -35,5 +39,11 @@ Route::prefix('/v1')->group(function () {
             Route::get('/{id}', CameraGet::class);
         });
         Route::get('/map', MapController::class);
+    });
+    Route::prefix('/admin')->middleware(['auth:sanctum','type.admin'])->group(function () {
+        Route::get('/', UserIndex::class);
+        Route::put('/{id}', UserUpdate::class);
+        Route::delete('/{id}',UserDelete::class);
+        Route::post('/', UserStore::class);
     });
 });

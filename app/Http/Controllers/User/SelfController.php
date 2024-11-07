@@ -8,7 +8,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class SelfController extends Controller
+final readonly class SelfController extends Controller
 {
     /**
      * @return JsonResponse

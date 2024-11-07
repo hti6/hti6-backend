@@ -8,7 +8,7 @@ use App\Models\Camera;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class GetController extends Controller
+final readonly class GetController extends Controller
 {
     /**
      * @param string $id

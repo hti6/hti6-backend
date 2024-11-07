@@ -11,7 +11,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class IndexController extends Controller
+final readonly class IndexController extends Controller
 {
     /**
      * @param IndexRequest $request

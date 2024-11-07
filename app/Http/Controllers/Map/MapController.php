@@ -9,7 +9,7 @@ use App\Models\DamageRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class MapController extends Controller
+final readonly class MapController extends Controller
 {
     /**
      * @param MapRequest $request

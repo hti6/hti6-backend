@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Notification\IndexResource;
 use Illuminate\Http\Request;
 
-class NotificationsController extends Controller
+final readonly class NotificationsController extends Controller
 {
     public function __invoke()
     {
