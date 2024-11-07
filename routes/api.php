@@ -2,21 +2,22 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\DamageRequest\IndexController as DamageRequestIndex;
-use App\Http\Controllers\DamageRequest\StoreController as DamageRequestStore;
-use App\Http\Controllers\DamageRequest\GetController as DamageRequestGet;
+use App\Http\Controllers\Camera\GetController as CameraGet;
 use App\Http\Controllers\Camera\IndexController as CameraIndex;
 use App\Http\Controllers\Camera\StoreController as CameraStore;
-use App\Http\Controllers\Camera\GetController as CameraGet;
 use App\Http\Controllers\Category\IndexController as CategoryIndex;
-use App\Http\Controllers\StatisticsController;
-use App\Http\Controllers\User\IndexController as UserIndex;
-use App\Http\Controllers\User\StoreController as UserStore;
-use App\Http\Controllers\User\UpdateController as UserUpdate;
-use App\Http\Controllers\User\DeleteController as UserDelete;
+use App\Http\Controllers\DamageRequest\GetController as DamageRequestGet;
+use App\Http\Controllers\DamageRequest\IndexController as DamageRequestIndex;
+use App\Http\Controllers\DamageRequest\StoreController as DamageRequestStore;
 use App\Http\Controllers\Map\MapController;
+use App\Http\Controllers\StatisticsController;
+use App\Http\Controllers\User\DeleteController as UserDelete;
+use App\Http\Controllers\User\IndexController as UserIndex;
 use App\Http\Controllers\User\NotificationsController;
 use App\Http\Controllers\User\SelfController;
+use App\Http\Controllers\User\StoreController as UserStore;
+use App\Http\Controllers\User\UpdateController as UserUpdate;
+use App\Http\Controllers\User\UpdateSelfController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/v1')->group(function () {
@@ -27,7 +28,7 @@ Route::prefix('/v1')->group(function () {
     Route::prefix('/user')->middleware(['auth:sanctum','type.client'])->group(function () {
         Route::get('/',         SelfController::class);
         Route::get('/notifications', NotificationsController::class);
-        Route::put('/');
+        Route::put('/', UpdateSelfController::class);
         Route::get('/categories',CategoryIndex::class);
         Route::get('/statistics', StatisticsController::class);
         Route::prefix('/damage_requests')->group(function () {
