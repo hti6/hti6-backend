@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('port')->nullable();
             $table->string('username')->nullable();
             $table->string('password')->nullable();
+            $table->string('photo_url')->nullable();
         });
     }
 

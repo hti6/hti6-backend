@@ -11,9 +11,13 @@ use Illuminate\Support\Facades\Http;
 final class AIService
 {
     /**
-     * @throws ConnectionException|AIServiceException
+     * @param $file_url
+     * @param string $damage_request_id
+     * @return void
+     * @throws AIServiceException
+     * @throws ConnectionException
      */
-    public function request($file_url, ?string $damage_request_id = null, ?string $camera_id = null): void
+    public function request($file_url, string $damage_request_id): void
     {
         $request = Http::withHeaders(
             [
@@ -23,32 +27,65 @@ final class AIService
         print("Sending request");
         $response = $request
             ->post(
-                config('ai.AI_URL'),
+                config('ai.AI_URL' . 'predict'),
                 [
                     'files' => [$file_url],
                 ]
             );
         print("Request sended status:" . $response->status());
         if ($response->status() == 200) {
-            if (isset($damage_request_id)) {
-                print("Finding damage_request");
-                $damageRequest = DamageRequest::findOrFail($damage_request_id);
-                print("Damage request finded");
-                $response = $response->json();
-                $damageRequest->update([
-                    'priority' => $response[0]['type'] ?? 'middle',
-                    'photo_url' => $response[0]['image_url'] ? 'https://cdn.indock.ru/images/' . $response[0]['image_url'] : $damageRequest->photo_url,
-                ]);
-                print("Damage request updated id:" . $damageRequest->id);
-            } else {
-                $camera = Camera::findOrFail($camera_id);
-                DamageRequest::create([
-                    'point' => $camera->point,
-                    'priority' => $response->type ?? 'middle',
-                    'photo_url' => $response->image_url ?? null,
-                    'camera_id' => $camera->id
-                ]);
-            }
+            print("Finding damage_request");
+            $damageRequest = DamageRequest::findOrFail($damage_request_id);
+            print("Damage request finded");
+            $response = $response->json();
+            $damageRequest->update([
+                'priority' => $response[0]['type'] ?? 'middle',
+                'photo_url' => $response[0]['image_url'] ? 'https://cdn.indock.ru/images/' . $response[0]['image_url'] : $damageRequest->photo_url,
+            ]);
+            print("Damage request updated id:" . $damageRequest->id);
+        } else {
+            throw new AIServiceException();
+        }
+    }
+
+    /**
+     * @param string $rtsp_url
+     * @param string $camera_id
+     * @return void
+     * @throws AIServiceException
+     * @throws ConnectionException
+     */
+    public function request_to_camera(string $rtsp_url, string $camera_id): void
+    {
+        $request = Http::withHeaders(
+            [
+                'Accept' => 'application/json',
+            ]
+        );
+        print("Sending request");
+        $response = $request
+            ->post(
+                config('ai.AI_URL' . 'rtsp'),
+                [
+                    'rtsps' => [$rtsp_url],
+                ]
+            );
+        if ($response->status() == 200) {
+            print("Finding camera");
+            $camera = Camera::findOrFail($camera_id);
+            print("Camera finded");
+            $response = $response->json();
+            $damageRequest = DamageRequest::create([
+                'priority' => $response[0]['type'] ?? 'middle',
+                'photo_url' => $response[0]['image_url'] ? 'https://cdn.indock.ru/images/' . $response[0]['image_url'] : null,
+                'camera_id' => $camera->id,
+                'point' => $camera->point
+            ]);
+            print("Damage request created id:" . $damageRequest->id);
+            $camera->update([
+                'photo_url' => $response[0]['image_url'] ? 'https://cdn.indock.ru/images/' . $response[0]['image_url'] : null
+            ]);
+            print("Camera updated");
         } else {
             throw new AIServiceException();
         }

@@ -9,6 +9,9 @@ use App\Models\Camera;
 use Clickbar\Magellan\Data\Geometries\Point;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Junges\Kafka\Facades\Kafka as KafkaFacade;
+use Junges\Kafka\Message\Message;
 
 class StoreController extends Controller
 {
@@ -25,14 +28,27 @@ class StoreController extends Controller
         $result = $camera->checkCamera($dto['url'], $dto['username'] ?? null, $dto['password'] ?? null, $dto['port'] ?? null);
 
         if ($result['success']) {
-            Camera::create([
-                'name' => $dto['name'],
-                'url' => $dto['url'],
-                'username' => $dto['username'] ?? null,
-                'password' => $dto['password'] ?? null,
-                'port' => $dto['port'] ?? null,
-                'point' => Point::make($dto['latitude'], $dto['longitude'])
-            ]);
+            DB::transaction(function () use ($dto) {
+                $camera = Camera::create([
+                    'name' => $dto['name'],
+                    'url' => $dto['url'],
+                    'username' => $dto['username'] ?? null,
+                    'password' => $dto['password'] ?? null,
+                    'port' => $dto['port'] ?? null,
+                    'point' => Point::make($dto['latitude'], $dto['longitude'])
+                ]);
+
+                $message = new Message(
+                    body: [
+                        'camera_id' => $camera->id,
+                        'rtsp_url' => $camera->url
+                    ]
+                );
+                KafkaFacade::publish(config('kafka.brokers'))
+                    ->onTopic('cameras')
+                    ->withMessage($message)
+                    ->send();
+            });
         }
 
         return $this->present(qck_response());
