@@ -27,7 +27,7 @@ final class AIService
         print("Sending request");
         $response = $request
             ->post(
-                config('ai.AI_URL' . 'predict'),
+                config('ai.AI_URL') . 'predict',
                 [
                     'files' => [$file_url],
                 ]
@@ -65,7 +65,7 @@ final class AIService
         print("Sending request");
         $response = $request
             ->post(
-                config('ai.AI_URL' . 'rtsp'),
+                config('ai.AI_URL') . 'rtsp',
                 [
                     'rtsps' => [$rtsp_url],
                 ]
