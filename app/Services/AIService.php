@@ -105,6 +105,7 @@ final class AIService
                     ->unique()
                     ->values()
                     ->toArray();
+                print_r($damageClasses);
 
                 foreach ($damageClasses as $className) {
                     $category = Category::firstOrCreate(
