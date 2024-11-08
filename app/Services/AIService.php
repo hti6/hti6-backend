@@ -50,6 +50,11 @@ final class AIService
                     ->values()
                     ->toArray();
 
+                if (count($damageClasses) == 0) {
+                    $damageRequest->delete();
+                    return;
+                }
+
                 foreach ($damageClasses as $className) {
                     $category = Category::firstOrCreate(
                         ['name' => $className],[]
@@ -59,8 +64,6 @@ final class AIService
                         $damageRequest->categories()->attach($category->id);
                     }
                 }
-            } else {
-                $damageRequest->delete();
             }
             print("Damage request updated id:" . $damageRequest->id);
         } else {
