@@ -99,6 +99,7 @@ final class AIService
                 'camera_id' => $camera->id,
                 'point' => $camera->point
             ]);
+            print_r($response);
             if (isset($response[0]['predictions'])) {
                 $damageClasses = collect($response[0]['predictions'])
                     ->pluck('class')
