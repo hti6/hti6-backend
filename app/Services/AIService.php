@@ -99,20 +99,20 @@ final class AIService
                 'camera_id' => $camera->id,
                 'point' => $camera->point
             ]);
-            print_r($response);
+            print($response);
             if (isset($response[0]['predictions'])) {
                 $damageClasses = collect($response[0]['predictions'])
                     ->pluck('class')
                     ->unique()
                     ->values()
                     ->toArray();
-                print_r($damageClasses);
+                var_dump($damageClasses);
 
                 foreach ($damageClasses as $className) {
                     $category = Category::firstOrCreate(
                         ['name' => $className],[]
                     );
-                    print_r($category);
+                    var_dump($category);
                     if (!$damageRequest->categories()->where('category_id', $category->id)->exists()) {
                         $damageRequest->categories()->attach($category->id);
                     }
