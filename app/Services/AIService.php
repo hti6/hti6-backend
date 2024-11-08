@@ -59,6 +59,8 @@ final class AIService
                         $damageRequest->categories()->attach($category->id);
                     }
                 }
+            } else {
+                $damageRequest->delete();
             }
             print("Damage request updated id:" . $damageRequest->id);
         } else {
