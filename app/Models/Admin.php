@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Foundation\Auth\User as Model;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -20,4 +21,9 @@ class Admin extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function notifications(): MorphTo
+    {
+        return $this->morphTo(Notification::class, 'userable');
+    }
 }

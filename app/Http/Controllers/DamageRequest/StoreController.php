@@ -4,7 +4,10 @@ namespace App\Http\Controllers\DamageRequest;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DamageRequest\StoreRequest;
+use App\Models\Admin;
 use App\Models\DamageRequest;
+use App\Models\User;
+use App\Services\NotificationService;
 use Clickbar\Magellan\Data\Geometries\Point;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;

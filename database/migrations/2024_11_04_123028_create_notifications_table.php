@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('content');
             $table->boolean('is_readed');
-            $table->foreignUlid('user_id')->constrained('users')->cascadeOnDelete();
+            $table->ulidMorphs('userable');
         });
     }
 

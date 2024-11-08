@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\NotificationService;
 use Clickbar\Magellan\Database\Eloquent\HasPostgisColumns;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
@@ -27,6 +28,37 @@ class DamageRequest extends Model
             'srid' => 4326,
         ],
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function (DamageRequest $damageRequest) {
+            $notificationService = new NotificationService();
+            foreach (User::all() as $user) {
+                try {
+                    $notificationService->notify(
+                        $user,
+                        'Новое повреждение',
+                        'У вас появилось новое повреждение по координатам: ' . $damageRequest->point->getX() . ', ' . $damageRequest->point->getY()
+                    );
+                } catch (\Throwable $exception) {
+
+                }
+            }
+            foreach (Admin::all() as $admin) {
+                try {
+                    $notificationService->notify(
+                        $admin,
+                        'Новое повреждение',
+                        'У вас появилось новое повреждение по координатам: ' . $damageRequest->point->getX() . ', ' . $damageRequest->point->getY()
+                    );
+                } catch (\Throwable $exception) {
+
+                }
+            }
+        });
+    }
 
     /**
      * @return BelongsTo
