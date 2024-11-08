@@ -37,6 +37,8 @@ final readonly class IndexController extends Controller
 
         if (isset($dto['sort'])) {
             $damageRequests = $damageRequests->orderBy($dto['sort'], $dto['order'] ?? 'DESC');
+        } else {
+            $damageRequests = $damageRequests->orderBy('created_at', 'desc');
         }
 
         $damageRequests = $damageRequests->paginate($dto['first'] ?? 100, page: $dto['page'] ?? 1);
