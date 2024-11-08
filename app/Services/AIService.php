@@ -111,7 +111,7 @@ final class AIService
                     $category = Category::firstOrCreate(
                         ['name' => $className],[]
                     );
-
+                    print_r($category);
                     if (!$damageRequest->categories()->where('category_id', $category->id)->exists()) {
                         $damageRequest->categories()->attach($category->id);
                     }
