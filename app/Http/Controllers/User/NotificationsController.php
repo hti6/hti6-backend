@@ -18,7 +18,7 @@ final readonly class NotificationsController extends Controller
     {
         $user = getUser();
 
-        $notifications = $user->notifications;
+        $notifications = $user->notifications()->get();
 
         foreach ($notifications as $notification) {
             $notification->update([
