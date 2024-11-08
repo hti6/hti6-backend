@@ -89,10 +89,15 @@ final class AIService
                 ]
             );
         if ($response->status() == 200) {
+            $response = $response->json();
+            if (isset($response[0]['predictions']) && count($response[0]['predictions']) == 0) {
+                print("No predictions");
+                return;
+            }
+
             print("Finding camera");
             $camera = Camera::findOrFail($camera_id);
             print("Camera finded");
-            $response = $response->json();
             $damageRequest = DamageRequest::create([
                 'priority' => $response[0]['type'] ?? 'middle',
                 'photo_url' => $response[0]['image_url'] ? 'https://cdn.indock.ru/images/' . $response[0]['image_url'] : null,
