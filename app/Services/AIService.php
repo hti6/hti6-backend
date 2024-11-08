@@ -99,7 +99,7 @@ final class AIService
                 'camera_id' => $camera->id,
                 'point' => $camera->point
             ]);
-            if (isset($response[0]['predictions']) && is_array($response[0]['predictions'])) {
+            if (isset($response[0]['predictions'])) {
                 $damageClasses = collect($response[0]['predictions'])
                     ->pluck('class')
                     ->unique()
