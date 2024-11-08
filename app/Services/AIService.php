@@ -43,20 +43,18 @@ final class AIService
                 'priority' => $response[0]['type'] ?? 'middle',
                 'photo_url' => $response[0]['image_url'] ? 'https://cdn.indock.ru/images/' . $response[0]['image_url'] : $damageRequest->photo_url,
             ]);
-            print_r($response);
             if (isset($response[0]['predictions']) && is_array($response[0]['predictions'])) {
                 $damageClasses = collect($response[0]['predictions'])
                     ->pluck('class')
                     ->unique()
                     ->values()
                     ->toArray();
-                print_r($damageClasses);
 
                 foreach ($damageClasses as $className) {
                     $category = Category::firstOrCreate(
                         ['name' => $className],[]
                     );
-                    print_r($category);
+
                     if (!$damageRequest->categories()->where('category_id', $category->id)->exists()) {
                         $damageRequest->categories()->attach($category->id);
                     }
@@ -101,7 +99,7 @@ final class AIService
                 'camera_id' => $camera->id,
                 'point' => $camera->point
             ]);
-            if (isset($response[0]['predictions'])) {
+            if (isset($response[0]['predictions']) && is_array($response[0]['predictions'])) {
                 $damageClasses = collect($response[0]['predictions'])
                     ->pluck('class')
                     ->unique()
@@ -112,6 +110,7 @@ final class AIService
                     $category = Category::firstOrCreate(
                         ['name' => $className],[]
                     );
+
                     if (!$damageRequest->categories()->where('category_id', $category->id)->exists()) {
                         $damageRequest->categories()->attach($category->id);
                     }
