@@ -24,6 +24,6 @@ class Admin extends Model
 
     public function notifications(): MorphTo
     {
-        return $this->morphTo(Notification::class, 'userable');
+        return $this->morphTo(Notification::class, 'userable_type', 'userable_id');
     }
 }
