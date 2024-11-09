@@ -49,7 +49,7 @@ final readonly class StatisticsController extends Controller
             DB::raw('DATE_TRUNC(\'month\', created_at) as month'),
             DB::raw('COUNT(*) as count')
         )
-            ->where('created_at', '>=', $now->copy()->subMonths(12))
+            ->where('damage_requests.created_at', '>=', $now->copy()->subMonths(12))
             ->groupBy('month')
             ->orderBy('month', 'desc')
             ->get()
@@ -67,7 +67,7 @@ final readonly class StatisticsController extends Controller
     private function getCategoryStatistics(Carbon $now): array
     {
         $categories = Category::with(['damageRequests' => function ($query) use ($now) {
-            $query->where('created_at', '>=', $now->copy()->subMonths(6));
+            $query->where('damage_requests.created_at', '>=', $now->copy()->subMonths(6));
         }])
             ->get();
 
@@ -104,7 +104,7 @@ final readonly class StatisticsController extends Controller
                 DB::raw('COUNT(*) as count')
             )
                 ->where('priority', $priority)
-                ->where('created_at', '>=', $now->copy()->subMonths(6))
+                ->where('damage_requests.created_at', '>=', $now->copy()->subMonths(6))
                 ->groupBy('month')
                 ->orderBy('month', 'desc')
                 ->get()
