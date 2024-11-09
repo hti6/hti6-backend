@@ -60,6 +60,6 @@ final readonly class MapController extends Controller
         $map = $map->get();
         $cameras = $cameras->get();
 
-        return $this->present(qck_response([DamageRequestGetResource::collection($map), CameraGetResource::collection($cameras)]));
+        return $this->present(qck_response(['damages' => DamageRequestGetResource::collection($map), 'cameras' => CameraGetResource::collection($cameras)]));
     }
 }
