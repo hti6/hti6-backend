@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Map;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Map\MapRequest;
-use App\Http\Resources\DamageRequest\DamageRequestIndexResource;
+use App\Http\Resources\Camera\CameraGetResource;
+use App\Http\Resources\DamageRequest\DamageRequestGetResource;
+use App\Models\Camera;
 use App\Models\DamageRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 final readonly class MapController extends Controller
 {
@@ -20,6 +21,7 @@ final readonly class MapController extends Controller
         $dto = $request->validated();
 
         $map = DamageRequest::query();
+        $cameras = Camera::query();
 
         if (isset($dto['date_from'])) {
             $map = $map->whereIn('created_at', [$dto['date_from'], $dto['date_to']]);
@@ -56,7 +58,8 @@ final readonly class MapController extends Controller
         }
 
         $map = $map->get();
+        $cameras = $cameras->get();
 
-        return $this->present(qck_response(DamageRequestIndexResource::collection($map)));
+        return $this->present(qck_response([DamageRequestGetResource::collection($map), CameraGetResource::collection($cameras)]));
     }
 }
