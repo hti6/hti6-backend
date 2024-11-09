@@ -50,7 +50,7 @@ final readonly class MapController extends Controller
         }
 
         if (isset($dto['high_priority']) && !$dto['high_priority']) {
-            $map = $map->where('priority', '!=', 'low');
+            $map = $map->where('priority', '!=', 'high');
         }
 
         if (isset($dto['critical_priority']) && !$dto['critical_priority']) {
